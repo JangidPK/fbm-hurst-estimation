@@ -18,30 +18,25 @@ The project provides:
 
 Fractional Brownian Motion is a centered Gaussian process
 
-\[
-B_H(t)
-\]
+$$B_H(t)$$
 
 with covariance
 
-\[
-\text{Cov}(B_H(t),B_H(s))
-=
+$$
+\text{Cov}(B_H(t),B_H(s)) =
 \frac12
-\left(
-|t|^{2H}
-+
-|s|^{2H}
--
+\left( 
+|t|^{2H} +
+|s|^{2H} -
 |t-s|^{2H}
 \right)
-\]
+$$
 
 where
 
-\[
+$$
 H \in (0,1)
-\]
+$$
 
 is the Hurst exponent.
 
@@ -55,9 +50,9 @@ Unlike standard Brownian motion, fBm exhibits correlated increments.
 
 The objective of this project is to learn a mapping
 
-\[
+$$
 \text{Trajectory} \rightarrow H
-\]
+$$
 
 using simulated fBm data.
 
@@ -67,15 +62,15 @@ using simulated fBm data.
 
 The increment process
 
-\[
+$$
 X_k = B_H(k)-B_H(k-1)
-\]
+$$
 
 is called **Fractional Gaussian Noise (fGn)**.
 
 Unlike fBm, fGn is stationary and is completely characterized by its autocovariance
 
-\[
+$$
 \gamma(k)
 =
 \frac12
@@ -86,7 +81,7 @@ Unlike fBm, fGn is stationary and is completely characterized by its autocovaria
 +
 |k+1|^{2H}
 )
-\]
+$$
 
 All simulation algorithms generate fGn first and recover fBm using the cumulative sum.
 
