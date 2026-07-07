@@ -16,7 +16,7 @@ The project provides:
 
 # Background
 
-Fractional Brownian Motion is a centered Gaussian process
+Fractional Brownian Motion is a Gaussian process
 
 $$B_H(t)$$
 
@@ -70,18 +70,7 @@ is called **Fractional Gaussian Noise (fGn)**.
 
 Unlike fBm, fGn is stationary and is completely characterized by its autocovariance
 
-$$
-\gamma(k)
-=
-\frac12
-(
-|k-1|^{2H}
--
-2|k|^{2H}
-+
-|k+1|^{2H}
-)
-$$
+$$ \gamma(k) = \frac12 ( |k-1|^{2H} - 2|k|^{2H} + |k+1|^{2H} ) $$
 
 All simulation algorithms generate fGn first and recover fBm using the cumulative sum.
 
