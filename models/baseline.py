@@ -1,6 +1,6 @@
 """
 Linear Regression and Random Forest trained on
-handcrafted statistical features. These serve as a check that signal
+handcrafted statistical features. These serve as a check that info
 about H is present in the trajectories.
 
 Maybe linear regerssion can give satisfactory predictions.
@@ -19,7 +19,7 @@ class BaselineHurstRegressor:
 
     """
     Use scikit-learn regressor on
-    handcrafted features extracted from raw trajectories.
+    features extracted from raw trajectories.
 
     Good for systematic pipeline. 
     A direct regression can also be used
@@ -48,7 +48,7 @@ class BaselineHurstRegressor:
             raise ValueError(f"Unknown baseline kind: {kind}")
 
         self.kind = kind
-        self.scaler = StandardScaler()
+        self.scaler = StandardScaler() # scale
 
     def fit(self, X: np.ndarray, y: np.ndarray):
         feats = extract_features(X)

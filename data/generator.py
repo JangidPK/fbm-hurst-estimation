@@ -84,7 +84,9 @@ class FractionalBrownianMotionGenerator:
     # Simulation methods
     # ------------------------------------------------------------------
     def _fgn_cholesky(self, H: float) -> np.ndarray:
+
         """Cholesky factorization"""
+
         n = self.T
         idx = np.arange(n)
         gamma = self.autocovariance(H, idx)
@@ -110,7 +112,6 @@ class FractionalBrownianMotionGenerator:
 
         if np.min(eigvals) < -1e-9:
 
-
             return self._fgn_hosking(H)
 
         eigvals = np.maximum(eigvals, 0)  
@@ -124,10 +125,11 @@ class FractionalBrownianMotionGenerator:
         fgn = W[:n].real
         return fgn
 
+
     def _fgn_hosking(self, H: float) -> np.ndarray:
         """Exact simulation via Hosking's recursive method.
 
-            Exact but Very expansive, time wise
+            Very good for numerical stability but Very expansive, time wise
         """
         n = self.T
         gamma = self.autocovariance(H, np.arange(n))
@@ -158,16 +160,22 @@ class FractionalBrownianMotionGenerator:
 
 
     def _generate_fgn(self, H: float) -> np.ndarray:
+
         if self.method == "cholesky":
             fgn = self._fgn_cholesky(H)
+
         elif self.method == "davies-harte":
             fgn = self._fgn_davies_harte(H)
+
         else:
             fgn = self._fgn_hosking(H)
         return fgn
 
-    def generate_path(self, H: float, include_start: bool = True) -> np.ndarray:
-        """Generate a single fBm trajectory of length ``T`` for a given H.
+    def generate_path(self, 
+                      H: float, 
+                      include_start: bool = True) -> np.ndarray:
+        """
+        Single traj
 
         Parameters
         ----------
@@ -198,7 +206,7 @@ class FractionalBrownianMotionGenerator:
                          H_range: tuple[float, float] = (0.1, 0.9),
                          H_values: np.ndarray | None = None):
         
-        """Generate a full dataset of (trajectory, H) pairs.
+        """Generate a full dataset
 
         Parameters
         ----------
@@ -235,8 +243,10 @@ class FractionalBrownianMotionGenerator:
 if __name__ == "__main__":
 
     gen = FractionalBrownianMotionGenerator(T=512, 
-                                            method="davies-harte", seed=1234)
+                                            method="davies-harte", 
+                                            seed=1234)
 
-    X, y = gen.generate_dataset(n_samples=5, H_range=(0.1, 0.9))
+    X, y = gen.generate_dataset(n_samples=5, 
+                                H_range=(0.1, 0.9))
 
     print("X shape:", X.shape, "y:", y)

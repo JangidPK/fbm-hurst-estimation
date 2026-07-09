@@ -26,14 +26,9 @@ class FBmDataset(Dataset):
             Raw trajectories.
         y : np.ndarray, shape (N,)
             Hurst exponent targets.
-        normalize : {"zscore", "increments", None}, default="zscore"
-            - "zscore": normalize each trajectory to zero mean / unit std.
-            - "increments": use first differences (also z-scored) instead
-              of the raw path. Removes the need to learn/undo integration
-              and often helps models converge faster.
-            - None: no normalization applied.
+        normalize : {"zscore", "increments", None}
         """
-
+        # check inputs and targets have valid size (1 to 1 mapping)
         assert X.shape[0] == y.shape[0]
         self.normalize = normalize
         self.X = self._preprocess(X.astype(np.float32))
@@ -73,11 +68,13 @@ class FBmDataset(Dataset):
 
     def __getitem__(self, idx):
         # single trajectory instance 
+        # Sample give a torch tensor.
         x = torch.from_numpy(self.X[idx]).unsqueeze(-1)  # (T, 1)
         y = torch.tensor(self.y[idx])
         return x, y
 
 
+# dataset for the simple regressions
 def train_val_test_split(X: np.ndarray,
                          y: np.ndarray, 
                          val_frac: float = 0.15,
@@ -87,7 +84,7 @@ def train_val_test_split(X: np.ndarray,
     
     """
     
-    Split (X, y) into train/val/test with (approximately) uniform
+    Split (X, y) into train/val/test with approximately uniform
     coverage of H across splits, via stratified binning of H.
 
     Returns
@@ -115,13 +112,9 @@ def train_val_test_split(X: np.ndarray,
         test_idx.extend(idx[n_val:n_val + n_test])
         train_idx.extend(idx[n_val + n_test:])
 
-
-
-
     train_idx = np.array(train_idx)
     val_idx = np.array(val_idx)
     test_idx = np.array(test_idx)
-
 
 
     return (

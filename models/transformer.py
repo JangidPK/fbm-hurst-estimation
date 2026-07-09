@@ -7,8 +7,8 @@ import torch.nn as nn
 
 class PositionalEncoding(nn.Module):
 
-    """Standard sinusoidal positional encoding 
-    (Vaswani et al., 2017, Attention).
+    """
+    Standard sinusoidal positional encoding 
 
     Acts as an orthonormal basis for each position
     """
